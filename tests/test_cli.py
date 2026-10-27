@@ -82,12 +82,25 @@ class CliTests(unittest.TestCase):
         self.assertEqual((code, json.loads(stdout)["status"]), (2, "error"))
 
     def test_missing_api_key_is_actionable_without_a_traceback(self):
-        code, stdout, stderr, session = self.run_cli(["example.com", "keyword"], environment={})
-        self.assertEqual((code, stdout), (2, ""))
-        self.assertIn("SERPAPI_API_KEY", stderr)
-        session.get.assert_not_called()
-        code, stdout, _, _ = self.run_cli(["example.com", "keyword", "--json"], environment={})
-        self.assertEqual((code, json.loads(stdout)["status"]), (2, "error"))
+        for environment in ({}, {"SERPAPI_API_KEY": ""}, {"SERPAPI_API_KEY": " \t "}):
+            for json_output in (False, True):
+                with self.subTest(environment=environment, json_output=json_output):
+                    argv = ["example.com", "keyword", *(["--json"] if json_output else [])]
+                    code, stdout, stderr, session = self.run_cli(argv, environment=environment)
+                    self.assertEqual(code, 2)
+                    if json_output:
+                        data = json.loads(stdout)
+                        self.assertEqual(data["status"], "error")
+                        self.assertEqual(stderr, "")
+                        message = data["error"]
+                    else:
+                        self.assertEqual(stdout, "")
+                        message = stderr
+                    self.assertIn("SERPAPI_API_KEY environment variable is not set", message)
+                    self.assertIn('export SERPAPI_API_KEY="your-serpapi-api-key"', message)
+                    self.assertIn("replacing the placeholder with your API key", message)
+                    self.assertNotIn("Traceback", message)
+                    session.get.assert_not_called()
 
     def test_legacy_max_pages_alias_limits_depth(self):
         code, stdout, _, _ = self.run_cli(["example.com", "keyword", "--max_pages", "3", "--json"])
@@ -180,6 +193,8 @@ class CliTests(unittest.TestCase):
         self.assertTrue(data["config"]["fresh"])
         self.assertEqual(session.get.call_args.kwargs["params"]["api_key"], API_KEY)
         self.assertNotIn(API_KEY, stdout + stderr)
+        self.assertIn("SERPAPI_API_KEY environment variable is not set", stderr)
+        self.assertIn('export SERPAPI_API_KEY="your-serpapi-api-key"', stderr)
         getpass.assert_called_once()
 
     def test_interactive_invalid_entries_can_be_corrected(self):

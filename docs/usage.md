@@ -15,6 +15,15 @@ Press Enter to accept a default or Ctrl+C to cancel. You can correct invalid
 entries at the prompt. Setup uses `SERPAPI_API_KEY` if set. Otherwise, it prompts
 privately for a key, uses it for the current run and does not save it.
 
+If the variable is missing or empty, the app explains this and shows:
+
+```sh
+export SERPAPI_API_KEY="your-serpapi-api-key"
+```
+
+Replace the placeholder with your key and rerun your search. Guided setup also
+lets you enter a key privately for the current run.
+
 Defaults are AU, English, desktop, subdomains included and a maximum depth of
 100. SerpApi chooses the location unless you supply one. For comparable checks,
 use the same city, country, language and device each time. Give a precise

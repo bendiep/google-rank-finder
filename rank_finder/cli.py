@@ -15,6 +15,11 @@ from .serpapi import SerpApiClient
 from .terminal import banner, format_result, section, style
 
 COUNTRY_CODES_URL = "https://serpapi.com/google-countries"
+API_KEY_SETUP = (
+    "The SERPAPI_API_KEY environment variable is not set or is empty.\n"
+    "Set it in your terminal, replacing the placeholder with your API key:\n"
+    '  export SERPAPI_API_KEY="your-serpapi-api-key"'
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -187,12 +192,17 @@ def interactive_config() -> tuple[SearchConfig, str, bool, str | None]:
     api_key = os.getenv("SERPAPI_API_KEY", "").strip()
     if not api_key:
         print(section("API key", stream=sys.stderr), file=sys.stderr)
+        print("  " + API_KEY_SETUP.replace("\n", "\n  "), file=sys.stderr)
         print(
             style("  Get a key: https://serpapi.com/manage-api-key", "2", stream=sys.stderr),
             file=sys.stderr,
         )
         print(
-            style("  Hidden while typing; used for this run only.\n", "2", stream=sys.stderr),
+            style(
+                "  Or enter a key below. Hidden while typing; used for this run only.\n",
+                "2",
+                stream=sys.stderr,
+            ),
             file=sys.stderr,
         )
     while not api_key:
@@ -263,7 +273,10 @@ def main(argv=None) -> int:
             timeout, retries, history = args.timeout, args.retries, args.history
             api_key = os.getenv("SERPAPI_API_KEY", "").strip()
             if not api_key:
-                message = "Set the SERPAPI_API_KEY environment variable before searching, or run without arguments for guided setup."
+                message = (
+                    API_KEY_SETUP
+                    + "\nThen rerun your search, or run without arguments for guided setup."
+                )
                 if json_output:
                     print(json.dumps({"status": "error", "error": message}))
                 else:
