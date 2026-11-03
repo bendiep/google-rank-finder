@@ -6,7 +6,7 @@ Search by country, city, language and device using [SerpApi](https://serpapi.com
 Run a guided setup in your terminal, use command-line arguments in scripts, or
 save results as JSON and SQLite history.
 
-[Quick start](#quick-start) · [Examples](#examples) · [Understanding results](#understanding-results) · [Full reference](docs/usage.md)
+[Quick start](#quick-start) · [Examples](#examples) · [Understanding results](#understanding-results)
 
 ## Quick start
 
@@ -92,8 +92,7 @@ JSON includes the rank, matched URL, search settings, timestamps and search
 status. History appends each check to a local SQLite file. API keys are excluded
 from both. For recurring checks, run the same command from your scheduler.
 
-See the [full option reference](docs/usage.md#options) or run
-`python google-rank-finder.py --help` for all flags and defaults.
+Run `python google-rank-finder.py --help` for all flags and defaults.
 
 ## Understanding results
 
@@ -141,9 +140,6 @@ depth and status before treating a missing match as a ranking drop.
 Rank is a snapshot for the chosen search settings. Keep the city, country,
 language and device consistent when comparing checks. Ads, Maps listings,
 AI Overview citations and nested sitelinks are outside this measurement.
-
-The [usage guide](docs/usage.md) explains ranking, request limits, JSON fields
-and exit-code exceptions.
 
 ## Development
 
