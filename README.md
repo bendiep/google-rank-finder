@@ -1,4 +1,4 @@
-# Google rank finder
+# Google Rank Finder
 
 Check where a website ranks in Google's organic results for a keyword or phrase.
 Search by country, city, language and device using [SerpApi](https://serpapi.com/).
@@ -24,22 +24,32 @@ python -m pip install -r requirements.txt
 
 ### 2. Run your first check
 
-Start with the guided setup:
+Set your key and start the guided setup:
 
 ```sh
+export SERPAPI_API_KEY="your-serpapi-api-key"
 python google-rank-finder.py
 ```
 
 Enter your website and keyword, then choose your search settings. Press Enter
-to accept a default. If you haven't set `SERPAPI_API_KEY`, setup asks for your
-key privately and uses it for that run only.
+to accept a default. If `SERPAPI_API_KEY` is missing or empty, the app shows
+the setup command and exits with code `2` before asking any questions.
 
 For command-line use, set your key and supply the website and keyword:
 
 ```sh
 export SERPAPI_API_KEY="your-serpapi-api-key"
-python google-rank-finder.py example.com "example keyword"
+python google-rank-finder.py --domain example.com --keyword "example keyword"
 ```
+
+Named options can go in any order, including `--domain` and `--keyword`:
+
+```sh
+python google-rank-finder.py --keyword "example keyword" --country AU --domain example.com
+```
+
+The positional form, `python google-rank-finder.py example.com "example keyword"`,
+also works. Without names, the domain must come before the keyword.
 
 You can also use `python -m rank_finder` in place of `python google-rank-finder.py`.
 
@@ -53,7 +63,7 @@ Use `--country` to change the country. See
 ### Check a location and device
 
 ```sh
-python google-rank-finder.py example.com "example keyword" \
+python google-rank-finder.py --keyword "example keyword" --domain example.com \
   --country AU \
   --location "Melbourne, Victoria, Australia" \
   --language en \
@@ -91,14 +101,14 @@ A successful check shows the highest matching organic position and URL. For
 example, the beginning of the output might look like this:
 
 ```text
-  Google rank finder
-  Organic Google results / SerpApi
-  ----------------------------------------------------------------
+  Google Rank Finder | Organic search results
+  -------------------------------------------
 
-  #2  Match found
+  Rank #2
   https://www.example.com/about
 
   Search
+    Provider          SerpApi
     Website           example.com
     Keyword           example keyword
     Country           AU
@@ -110,7 +120,13 @@ example, the beginning of the output might look like this:
 The coverage and timing sections report the results and pages checked, deepest
 position examined, HTTP requests, stop reason and retrieval time. Terminal
 colours highlight headings and the outcome. Redirected text has no colour codes;
-set `NO_COLOR=1` to disable colours in a terminal too. JSON keeps its existing format.
+set `NO_COLOR=1` to disable colours in a terminal too.
+
+Each check ends with a **Run again** command you can copy, paste and edit for
+your next search. It preserves your search, output, history and request settings
+without including your API key. On Windows, use PowerShell for this command.
+With JSON output, the command goes to stderr so stdout stays valid JSON and
+the JSON format remains unchanged.
 
 | Status | Meaning | Exit code |
 | --- | --- | --- |

@@ -12,17 +12,17 @@ depth. It also offers exact-host matching, fresh results, JSON output and an
 optional SQLite history file.
 
 Press Enter to accept a default or Ctrl+C to cancel. You can correct invalid
-entries at the prompt. Setup uses `SERPAPI_API_KEY` if set. Otherwise, it prompts
-privately for a key, uses it for the current run and does not save it.
+entries at the prompt. Set `SERPAPI_API_KEY` before starting setup.
 
-If the variable is missing or empty, the app explains this and shows:
+If the variable is missing, empty or only whitespace, the app exits with code
+`2` before asking any questions or making API requests. It explains this and
+shows:
 
 ```sh
 export SERPAPI_API_KEY="your-serpapi-api-key"
 ```
 
-Replace the placeholder with your key and rerun your search. Guided setup also
-lets you enter a key privately for the current run.
+Replace the placeholder with your key and rerun your search.
 
 Defaults are AU, English, desktop, subdomains included and a maximum depth of
 100. SerpApi chooses the location unless you supply one. For comparable checks,
@@ -30,18 +30,50 @@ use the same city, country, language and device each time. Give a precise
 location such as `Melbourne, Victoria, Australia`.
 
 Questions are grouped into search terms, search settings and output, with
-defaults in brackets and hints beneath each question. The country question links
-to [SerpApi's supported country codes](https://serpapi.com/google-countries).
+defaults in square brackets, optional fields marked `(optional)` and hints
+beneath each question. Examples begin with `e.g.` and alternatives use `|`.
+Choice hints list options first with `Choose:`, with an explanation on the next
+line. Both lines use the same indentation.
+The country and language questions show a reference link below their examples:
+[SerpApi's supported country codes](https://serpapi.com/google-countries) and
+[language codes](https://serpapi.com/google-languages).
+
+Each search checks one device. Choose: `desktop | mobile | tablet`. There is no
+all-devices option. To compare devices, run a separate check for each one.
+
+During a search, a spinner and elapsed timer show that the app is working,
+including while it waits for responses or retries. The spinner clears before
+the results appear, including after cancellation or an error. Progress goes to
+stderr so JSON on stdout stays valid. Redirected output and terminals with
+`TERM=dumb` show a static search summary instead of animation.
 
 Text results show the rank and matched URL first, followed by aligned search,
 coverage and timing details. Headings and outcomes use colour in terminals.
 Redirected output stays plain text. Set `NO_COLOR=1` to disable terminal colours.
 
+Every completed check, including failed or incomplete searches, shows a
+**Run again** command. Copy it to repeat the search or edit its named options.
+The command preserves the search settings, JSON mode, history path and any custom
+timeout or retry limits. It uses `python -m rank_finder`, so run it from the
+project directory with the same Python environment and `SERPAPI_API_KEY` set.
+On Windows, paste the command into PowerShell.
+
 ## Options
 
 ```sh
-python google-rank-finder.py DOMAIN "KEYWORD" [OPTIONS]
+python google-rank-finder.py --domain DOMAIN --keyword "KEYWORD" [OPTIONS]
 ```
+
+All named options can go in any order. For example:
+
+```sh
+python google-rank-finder.py --keyword "example keyword" --device mobile --domain example.com
+```
+
+`--query` is an alias for `--keyword`. The positional form,
+`python google-rank-finder.py DOMAIN "KEYWORD" [OPTIONS]`, also works, with the
+domain first. You can mix named and positional search terms. Any unnamed value
+fills the domain first if needed, then the keyword. Supply each search term once.
 
 `DOMAIN` accepts a hostname or full HTTP URL. Matching uses the hostname only,
 so a URL path does not restrict the check to that page.
@@ -50,6 +82,8 @@ so a URL path does not restrict the check to that page.
 
 | Option | What it controls | Default |
 | --- | --- | --- |
+| `--domain DOMAIN` | Website hostname or full HTTP URL | Required unless supplied positionally |
+| `--keyword KEYWORD`, `--query KEYWORD` | Search keyword or phrase | Required unless supplied positionally |
 | `--country` | Two-letter [search country code](https://serpapi.com/google-countries), such as `AU` or `US` | `au` |
 | `--location` | Search origin, preferably a city and region | Provider-selected |
 | `--language` | Interface language, such as `en` or `en-gb` | `en` |
@@ -109,9 +143,10 @@ Review these observations when interpreting a rank.
 python google-rank-finder.py example.com "example keyword" --country AU --json > result.json
 ```
 
-Search output on stdout is one JSON object. Interactive prompts and setup
-errors use stderr, except that a missing API key with `--json` returns a short
-JSON error object on stdout.
+Search output on stdout is one JSON object. The **Run again** command,
+interactive prompts and setup errors use stderr, except that a missing API key
+with `--json` returns a short JSON error object on stdout. The command does not
+add fields to the JSON result or appear in saved history.
 
 | Fields | Contents |
 | --- | --- |
