@@ -4,41 +4,45 @@ Check Google rankings with [SerpApi](https://serpapi.com/).
 
 ## 🔍 What it does
 
-- Finds your website's highest organic position for a keyword.
-- Lets you choose the country, location, language and device.
-- Exports results as JSON or saves a local search history.
+- Finds your website's highest organic position and matching URL.
+- Customises search settings, depth, subdomain matching and caching.
+- Shows results in the terminal, exports JSON or saves SQLite history.
 
----
+## 📋 Requirements
 
-## 📦 Installation
+- Python 3.10 or newer
+- [SerpApi API key](https://serpapi.com/manage-api-key)
 
-You'll need Python 3.10 or newer and a [SerpApi API key](https://serpapi.com/manage-api-key).
+## 📦 Setup
 
 ```sh
+# Clone the repository and move into its directory.
 git clone https://github.com/bendiep/google-rank-finder.git
 cd google-rank-finder
+
+# Create and activate a virtual environment.
 python3 -m venv .venv
 source .venv/bin/activate
+
+# Install the project dependencies.
 python -m pip install -r requirements.txt
+
+# Set your API key:
+export SERPAPI_API_KEY="your-serpapi-api-key"
 ```
 
 ## ▶️ Usage
 
-Set your API key:
+### 1. Answer the prompts
 
 ```sh
-export SERPAPI_API_KEY="your-serpapi-api-key"
-```
-
-Start the guided setup:
-
-```sh
+# Run the script
 python google-rank-finder.py
 ```
 
 Enter your website and keyword. Press Enter to accept the default settings.
 
-Or run a search directly:
+### 2. Pass the domain and keyword in the command
 
 ```sh
 python google-rank-finder.py --domain example.com --keyword "running shoes"
@@ -52,10 +56,22 @@ Run `python google-rank-finder.py --help` for all flags and defaults.
 
 ## 🛠️ Development
 
+### 1. Install development dependencies
+
 ```sh
 python -m pip install -r requirements-dev.txt
+```
+
+### 2. Check the code
+
+```sh
 python -m ruff check .
 python -m ruff format --check .
+```
+
+### 3. Run the tests
+
+```sh
 python -m unittest discover -v
 ```
 
