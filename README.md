@@ -33,10 +33,9 @@ export SERPAPI_API_KEY="your-serpapi-api-key"
 
 ## ▶️ Usage
 
-### 1. Answer the prompts
+### 1. Run the script and follow the prompts
 
 ```sh
-# Run the script
 python google-rank-finder.py
 ```
 
@@ -65,7 +64,10 @@ python -m pip install -r requirements-dev.txt
 ### 2. Check the code
 
 ```sh
+# Check for lint errors.
 python -m ruff check .
+
+# Check code formatting.
 python -m ruff format --check .
 ```
 
@@ -75,7 +77,7 @@ python -m ruff format --check .
 python -m unittest discover -v
 ```
 
-Tests don't need an API key or make live searches.
+Note: Tests don't need an API key or make live searches.
 
 ## 📝 License
 
