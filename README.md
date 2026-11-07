@@ -1,10 +1,10 @@
 # Google Rank Finder
 
-A command-line tool for checking Google rankings with [SerpApi](https://serpapi.com/).
+A command-line tool for checking Google search rankings using [SerpApi](https://serpapi.com/).
 
-- Finds a website's highest organic position for a keyword or phrase and returns the ranking results.
-- Supports configurable search settings, result depth, subdomain matching and caching.
-- Exports results as JSON or saves search history in a local SQLite database.
+Finds a website’s highest organic ranking for a given keyword or phrase and returns detailed search results.
+
+Supports configurable search settings, result depth, subdomain matching, and caching. Results can be exported as JSON or stored in a local SQLite database for historical tracking.
 
 ## 📋 Requirements
 
