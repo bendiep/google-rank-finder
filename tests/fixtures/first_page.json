@@ -1,0 +1,27 @@
+{
+  "search_metadata": {
+    "id": "fixture-first-page",
+    "status": "Success",
+    "created_at": "2026-10-24 00:00:00 UTC"
+  },
+  "search_parameters": {
+    "engine": "google",
+    "q": "example keyword",
+    "gl": "au",
+    "hl": "en",
+    "device": "desktop",
+    "location_used": "Melbourne,Victoria,Australia"
+  },
+  "search_information": {
+    "query_displayed": "example keyword",
+    "organic_results_state": "Results for exact spelling"
+  },
+  "organic_results": [
+    {"position": 1, "link": "https://other.test/"},
+    {"position": 2, "link": "https://www.example.com/about"}
+  ],
+  "serpapi_pagination": {
+    "current": 1,
+    "next": "https://serpapi.com/search.json?engine=google&start=10"
+  }
+}
