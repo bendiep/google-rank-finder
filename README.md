@@ -2,8 +2,8 @@
 
 A command-line tool for checking Google rankings with [SerpApi](https://serpapi.com/).
 
-- Finds your website's highest organic position and matching URL.
-- Lets you customise search settings, depth, subdomain matching and caching.
+- Finds a website's highest organic position for a keyword or phrase and returns the ranking results.
+- Supports configurable search settings, result depth, subdomain matching and caching.
 - Exports results as JSON or saves search history in a local SQLite database.
 
 ## 📋 Requirements
