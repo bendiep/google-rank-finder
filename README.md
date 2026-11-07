@@ -4,8 +4,6 @@ A command-line tool for checking Google search rankings using [SerpApi](https://
 
 Finds a website’s highest organic ranking for a given keyword or phrase and returns detailed search results.
 
-Supports configurable search settings, result depth, subdomain matching, and caching. Results can be exported as JSON or stored in a local SQLite database for historical tracking.
-
 ## 📋 Requirements
 
 - Python 3.10 or newer
@@ -14,14 +12,6 @@ Supports configurable search settings, result depth, subdomain matching, and cac
 ## 📦 Setup
 
 ```sh
-# Clone the repository and move into its directory.
-git clone https://github.com/bendiep/google-rank-finder.git
-cd google-rank-finder
-
-# Create and activate a virtual environment.
-python3 -m venv .venv
-source .venv/bin/activate
-
 # Install the project dependencies.
 python -m pip install -r requirements.txt
 
@@ -37,19 +27,17 @@ export SERPAPI_API_KEY="your-serpapi-api-key"
 python google-rank-finder.py
 ```
 
-Enter your website and keyword. Press Enter to accept the default settings.
-
-### 2. Pass the domain and keyword in the command
+### 2. Run with command-line arguments
 
 ```sh
 python google-rank-finder.py --domain example.com --keyword "running shoes"
 ```
 
-The defaults are Australia, English, desktop and up to 100 organic positions.
+### 3. See all options
 
-Add `--json` to export JSON or `--history ranks.sqlite3` to save a local history.
-
-Run `python google-rank-finder.py --help` for all flags and defaults.
+```sh
+python google-rank-finder.py --help
+```
 
 ## 🛠️ Development
 
