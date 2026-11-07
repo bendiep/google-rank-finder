@@ -1,89 +1,82 @@
-# python-google-search-rank
+# Google Rank Finder
 
-A simple Python script that checks the `Google Search Ranking` of a given domain for a specific keyword or phrase.
+A command-line tool for checking Google search rankings using [SerpApi](https://serpapi.com/).
 
-It supports the following Search APIs:
+Finds a website’s highest organic ranking for a given keyword or phrase and returns detailed search results.
 
-- [SerpApi](https://serpapi.com) (Default)
-- [Google Custom Search API](https://developers.google.com/custom-search/v1)
+Supports configurable search settings, result depth, subdomain matching, and caching. Results can be exported as JSON or stored in a local SQLite database for historical tracking.
 
-## 📋 Prerequisites
+## 📋 Requirements
 
-Depending on which Search API you choose, you’ll need one of the following:
+- Python 3.10 or newer
+- [SerpApi API key](https://serpapi.com/manage-api-key)
 
-### Option 1: SerpApi
+## 📦 Setup
 
-- A SerpApi `API Key` is required (can be created [here](https://serpapi.com))
+```sh
+# Clone the repository and move into its directory.
+git clone https://github.com/bendiep/google-rank-finder.git
+cd google-rank-finder
 
-### Option 2: Google Custom Search API
+# Create and activate a virtual environment.
+python3 -m venv .venv
+source .venv/bin/activate
 
-- A Google Custom Search `API Key` and `Engine ID` is required (both can be created [here](https://developers.google.com/custom-search/v1/introduction))
+# Install the project dependencies.
+python -m pip install -r requirements.txt
 
-## 📦 Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/bendiep/python-google-rank-finder.git
-   cd python-google-rank-finder
-   ```
-
-2. Install the required packages:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Set up your environment variables based on the Search API you plan to use:
-
-   ```bash
-   # For SerpApi
-   export SERPAPI_API_KEY="your-serpapi-api-key"
-
-   # For Google Custom Search API
-   export GOOGLE_CUSTOM_SEARCH_API_KEY="your-google-custom-search-api-key"
-   export GOOGLE_CUSTOM_SEARCH_ENGINE_ID="your-google-custom-search-engine-id"
-   ```
+# Set your API key:
+export SERPAPI_API_KEY="your-serpapi-api-key"
+```
 
 ## ▶️ Usage
 
-Run the script with the following command:
+### 1. Run the script and follow the prompts
 
-```bash
-python google-rank-finder.py <website_domain> <search_term>
-
-e.g.
-python google-rank-finder.py "instagram.com" "ig"
+```sh
+python google-rank-finder.py
 ```
 
-Optional arguments:
+Enter your website and keyword. Press Enter to accept the default settings.
 
-`--country`: Specify the country code
+### 2. Pass the domain and keyword in the command
 
-```bash
-python google-rank-finder.py <website_domain> <search_term> --country AU
+```sh
+python google-rank-finder.py --domain example.com --keyword "running shoes"
 ```
 
-`--max_pages`: Set the maximum number of pages to search (default: 10).
+The defaults are Australia, English, desktop and up to 100 organic positions.
 
-```bash
-python google-rank-finder.py <website_domain> <search_term> --max_pages 3
+Add `--json` to export JSON or `--history ranks.sqlite3` to save a local history.
+
+Run `python google-rank-finder.py --help` for all flags and defaults.
+
+## 🛠️ Development
+
+### 1. Install development dependencies
+
+```sh
+python -m pip install -r requirements-dev.txt
 ```
 
-`--api`: Choose the Search API to use (`SERPAPI` or `GOOGLE_CUSTOM_SEARCH`). Default is `SERPAPI`.
+### 2. Check the code
 
-```bash
-python google-rank-finder.py <website_domain> <search_term> --api GOOGLE_CUSTOM_SEARCH
+```sh
+# Check for lint errors.
+python -m ruff check .
+
+# Check code formatting.
+python -m ruff format --check .
 ```
 
-## 📂 Example Output
+### 3. Run the tests
 
-```text
-python google-rank-finder.py "instagram.com" "ig"
-Google Search Rank (via. SERPAPI):
-page: 1, rank: 1, url: https://www.instagram.com/
+```sh
+python -m unittest discover -v
 ```
+
+Note: Tests don't need an API key or make live searches.
 
 ## 📝 License
 
-Released under the MIT License. Feel free to use, modify, and share!
+[MIT](LICENSE).
