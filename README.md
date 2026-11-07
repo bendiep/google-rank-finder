@@ -39,6 +39,31 @@ python google-rank-finder.py --domain example.com --keyword "running shoes"
 python google-rank-finder.py --help
 ```
 
+## 📊 Results
+
+Example output for `amazon.com.au` and `running shoes`.
+
+```text
+Google Rank Finder | Organic search results
+-------------------------------------------
+
+Rank #43
+https://www.amazon.com.au/gp/bestsellers/sporting-goods/5044422051
+
+Search
+  Website           amazon.com.au
+  Keyword           running shoes
+  Country           AU
+  Language          en
+  Device            Desktop
+
+Coverage
+  Results checked   40
+  Checked through   Position 43
+  Pages fetched     5
+  Stopped because   Match found
+```
+
 ## 🛠️ Development
 
 ### 1. Install development dependencies
